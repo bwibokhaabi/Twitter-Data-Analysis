@@ -51,19 +51,14 @@ class TweetDfExtractor:
             source.append(items['source'])
            
         return source
-    def find_full_text(self)->list:
-        
-
-        text = [x.get('retweeted_status', {}).get('user', {}).get('text') for x in self.tweets_list]
-    
+     def find_full_text(self)->list:
+         
+        text=[]
+        for items in self.tweets_list:
+            text.append(items['text'])
           
         return text
-        '''
-        if 'retweeted_status' in tweet:
-    	text = tweet['retweeted_status']['text']
-         else:
-    	text = tweet['text']
-        '''
+       
     
     
     def find_sentiments(self, text)-> str:
@@ -192,7 +187,7 @@ class TweetDfExtractor:
 if __name__ == "__main__":
     # required column to be generated you should be creative and add more features
     columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count',                   'retweet_count','original_author', 'screen_count', 'followers_count','friends_count','possibly_sensitive', 'hashtags',                          'user_mentions', 'place', 'place_coord_boundaries']
-    tweet_list = read_json("C:/Users/kachase/Desktop/task_one/Twitter-Data-Analysis/data/Economic_Twitter_Data/Economic_Twitter_Data.json")
+    tweet_num ,tweet_list = read_json("Economic_Twitter_Data.json")
     tweet = TweetDfExtractor(tweet_list)
     tweet_df = tweet.get_tweet_df() 
 
