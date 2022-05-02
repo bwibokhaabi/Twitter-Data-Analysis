@@ -14,7 +14,7 @@ class Clean_Tweets:
         remove rows that has column names. This error originated from
         the data collection stage.  
         """
-        unwanted_rows = df[df['retweet_count'] == 'retweet_count' ].index
+        unwanted_rows = df[df['retweet_count'] == 'retweet_count' ].index[0]
         df.drop(unwanted_rows , inplace=True)
         df = df[df['polarity'] != 'polarity']
         
@@ -80,7 +80,7 @@ class Clean_Tweets:
         return df
     def clean_df(self, df: pd.DataFrame):
         df = self.drop_unwanted_column(df) 
-        '''
+        
         
         df = self.remove_non_english_tweets(df)
         df = self.drop_duplicate(df)
@@ -88,7 +88,7 @@ class Clean_Tweets:
         df = self.convert_to_numbers(df)
         df = self.drop_nan(df)
         df = self.reset_index(df)
-               '''
+               
         return df
     
 if __name__ == "__main__":
