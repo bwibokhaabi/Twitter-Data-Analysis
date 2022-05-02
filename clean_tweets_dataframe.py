@@ -46,7 +46,7 @@ class Clean_Tweets:
         """
         
         
-        df['polarity'] = pd.to_numeric(df['Polarity'])
+        df['polarity'] = pd.to_numeric(df['polarity'])
         df['subjectivity'] = pd.to_numeric(df['subjectivity'])
         df['retweet_count'] = pd.to_numeric(df['retweet_count'])
         df['favorite_count'] = pd.to_numeric(df['favorite_count'])
@@ -60,8 +60,8 @@ class Clean_Tweets:
         """
         remove non english tweets from lang
         """
-        non_english = df[df['lang'] != 'en']
-        df = df.drop( non_english , inplace=True)
+        df= df[df['lang'] == 'en']
+    
         
         return df
     def drop_nan(self, df:pd.DataFrame)->pd.DataFrame:
@@ -79,14 +79,16 @@ class Clean_Tweets:
         
         return df
     def clean_df(self, df: pd.DataFrame):
-        df = self.drop_unwanted_column(df)
+        df = self.drop_unwanted_column(df) 
+        '''
+        
         df = self.remove_non_english_tweets(df)
         df = self.drop_duplicate(df)
         df = self.convert_to_datetime(df)
         df = self.convert_to_numbers(df)
         df = self.drop_nan(df)
         df = self.reset_index(df)
-
+               '''
         return df
     
 if __name__ == "__main__":
@@ -94,4 +96,4 @@ if __name__ == "__main__":
         
     data=Clean_Tweets(df)
     
-    cleaned_data=data.clean_df(df)
+    cleaned_data=data.clean_df()
