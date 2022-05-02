@@ -93,3 +93,5 @@ if __name__ == "__main__":
     df=pd.read_csv('processed_tweet_data.csv')
         
     data=Clean_Tweets(df)
+    
+    cleaned_data=data.clean_df(df)
