@@ -56,7 +56,6 @@ class Clean_Tweets:
         
         
         return df
-    
     def remove_non_english_tweets(self, df:pd.DataFrame)->pd.DataFrame:
         """
         remove non english tweets from lang
@@ -65,3 +64,32 @@ class Clean_Tweets:
         df = df.drop( non_english , inplace=True)
         
         return df
+    def drop_nan(self, df:pd.DataFrame)->pd.DataFrame:
+        """
+        remove nan values
+        """
+        df = df.dropna()
+        
+        return df
+    def reset_index(self, df:pd.DataFrame)->pd.DataFrame:
+        """
+        resetting the index after dropping values
+        """
+        df = df.reset_index(drop=True)
+        
+        return df
+    def clean_df(self, df: pd.DataFrame):
+        df = self.drop_unwanted_column(df)
+        df = self.remove_non_english_tweets(df)
+        df = self.drop_duplicate(df)
+        df = self.convert_to_datetime(df)
+        df = self.convert_to_numbers(df)
+        df = self.drop_nan(df)
+        df = self.reset_index(df)
+
+        return df
+    
+if __name__ == "__main__":
+    df=pd.read_csv('processed_tweet_data.csv')
+        
+    data=Clean_Tweets(df)
