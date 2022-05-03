@@ -8,23 +8,23 @@ class Clean_Tweets:
     def __init__(self, df:pd.DataFrame):
         self.df = df
         print('Automation in Action...!!!')
-        
-    def drop_unwanted_column(self, df:pd.DataFrame)->pd.DataFrame:
+        '''
+    def drop_unwanted_row(self, df:pd.DataFrame):
         """
         remove rows that has column names. This error originated from
         the data collection stage.  
         """
-        unwanted_rows = df[df['retweet_count'] == 'retweet_count' ].index[0]
-        df.drop(unwanted_rows , inplace=True)
-        df = df[df['polarity'] != 'polarity']
+        unwanted_row = df[df['retweet_count'] == 'retweet_count' ].index
+        df.drop(unwanted_row , inplace=True )
+        #df = df[df['polarity'] != 'polarity']
         
-        return df
-    def drop_duplicate(self, df:pd.DataFrame)->pd.DataFrame:
+        '''
+    def drop_duplicate(self, df:pd.DataFrame):
         """
         drop duplicate rows
         """
         
-        df=df.drop_duplicates(inplace = True)    # Drop duplicates
+        df=df.drop_duplicates(inplace = False)    # Drop duplicates
         
         
         return df
@@ -35,7 +35,7 @@ class Clean_Tweets:
         
         df['created_at'] = pd.to_datetime(df['created_at'])
         #tweets from 2021 onwards
-        df['created_at'] = df[df['created_at'] >= '2020-12-31' ]
+        #df['created_at'] = df[df['created_at'] >= '2020-12-31' ]
         
         return df
     
@@ -68,32 +68,31 @@ class Clean_Tweets:
         """
         remove nan values
         """
-        df = df.dropna()
+        df.dropna()
         
         return df
     def reset_index(self, df:pd.DataFrame)->pd.DataFrame:
         """
         resetting the index after dropping values
         """
-        df = df.reset_index(drop=True)
-        
+        df.reset_index(drop=True)
         return df
-    def clean_df(self, df: pd.DataFrame):
-        df = self.drop_unwanted_column(df) 
+    
+    def clean_df(self, df: pd.DataFrame)->pd.DataFrame:
         
-        
-        df = self.remove_non_english_tweets(df)
-        df = self.drop_duplicate(df)
-        df = self.convert_to_datetime(df)
-        df = self.convert_to_numbers(df)
-        df = self.drop_nan(df)
-        df = self.reset_index(df)
+        #self.drop_unwanted_row(df) 
+        cleaned_data=self.remove_non_english_tweets(df)
+        cleaned_data =self.drop_duplicate(cleaned_data)
+        cleaned_data= self.convert_to_datetime(cleaned_data)
+        cleaned_data= self.convert_to_numbers(cleaned_data)
+        cleaned_data= self.drop_nan(cleaned_data)
+        cleaned_data= self.reset_index(cleaned_data)
                
-        return df
+        return cleaned_data
     
 if __name__ == "__main__":
     df=pd.read_csv('processed_tweet_data.csv')
         
-    data=Clean_Tweets(df)
+    cleaner=Clean_Tweets(df)
     
-    cleaned_data=data.clean_df()
+    cleaned_data=cleaner.clean_df(df)
