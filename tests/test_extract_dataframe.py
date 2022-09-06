@@ -4,10 +4,10 @@ import sys, os
  
 sys.path.append(os.path.abspath(os.path.join('../..')))
 
-from extract_dataframe import read_json
-from extract_dataframe import TweetDfExtractor
+from scripts.extract_dataframe import read_json
+from scripts.extract_dataframe import TweetDfExtractor
 
-tweet_num,tweet_list = read_json("C:/Users/kachase/Desktop/Twitter-Data-Analysis/data/Economic_Twitter_Data/Economic_Twitter_Data.json")
+tweet_num,tweet_list = read_json("C:/Users/user/Desktop/10academy/economics/data/Economic_Twitter_Data.json")
 
 
 
